@@ -23,7 +23,7 @@ export default function Register() {
         })
 
         alert("Signed up!");
-        navigate("/signin");
+        navigate("/login");
     }
 
     return (
