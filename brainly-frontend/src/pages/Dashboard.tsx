@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react"
 import AddContentModal from "../components/AddContentModal"
 import Button from "../components/Button"
-import { Card } from "../components/Card"
 import { PlusIcon } from "../icons/PlusIcon"
 import { ShareIcon } from "../icons/ShareIcon"
 import Sidebar from "../components/Sidebar"
@@ -9,6 +7,7 @@ import useContent from "../hooks/useContent"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import DisplayContent from "../components/DisplayContent"
+import { useState } from "react"
 
 
 function Dashboard() {

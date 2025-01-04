@@ -6,7 +6,7 @@ import { BACKEND_URL } from "../config";
 import axios from "axios";
 
 
-export default function AddContentModal({ open, onClose }) {
+export default function AddContentModal({ open, onClose }: { open: boolean, onClose: () => void }) {
 
     const [type, setType] = useState("youtube");
     const titleRef = useRef<HTMLInputElement>();

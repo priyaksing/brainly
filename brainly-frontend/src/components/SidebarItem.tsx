@@ -1,6 +1,4 @@
 import { ReactElement } from "react"
-import useContent from "../hooks/useContent"
-import { Card } from "./Card";
 import DisplayContent from "./DisplayContent";
 import axios from "axios";
 import { BACKEND_URL } from "../config";

@@ -31,7 +31,7 @@ export default function SharePage() {
             <div className="p-20">
                 <div className="flex flex-wrap gap-10 p-4">
                     {content.map((item) =>
-                        <Card index={item._id} type={item.type} title={item.title} link={item.link} />
+                        <Card index={item['_id']} type={item['type']} title={item['title']} link={item['link']} />
                     )}
                 </div>
             </div>
