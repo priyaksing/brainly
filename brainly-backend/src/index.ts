@@ -3,7 +3,7 @@ import mongoose, { mongo } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { z } from "zod";
-import { JWT_SECRET, DB_CONNECTION } from "./config";
+// import { JWT_SECRET, DB_CONNECTION } from "./config";
 import cors from "cors";
 
 
@@ -17,7 +17,7 @@ import { randomHash } from "./utils";
 
 // Connection to DB
 async function main() {
-    mongoose.connect(DB_CONNECTION);
+    mongoose.connect(process.env.DB_CONNECTION as unknown as string);
     app.listen(3000, () => {
         console.log("Listening on 3000");
     });
@@ -106,7 +106,7 @@ app.post("/api/v1/signin", async (req, res) => {
 
                 const token = jwt.sign({
                     id: foundUser._id
-                }, JWT_SECRET);
+                }, process.env.JWT_SECRET as unknown as string);
 
                 res.status(200).json({
                     token
