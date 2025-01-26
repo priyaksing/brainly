@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { verify } from "jsonwebtoken";
-import { JWT_SECRET } from "./config";
+// import { JWT_SECRET } from "./config";
 
 
 export const middleware = async (req: Request, res: Response, next: NextFunction) => {
 
     const token = req.headers["authorization"];
-    const decoded = jwt.verify(token as string, JWT_SECRET);
+    const decoded = jwt.verify(token as string, process.env.JWT_SECRET as unknown as string);
 
     if (decoded) {
         //@ts-ignore
