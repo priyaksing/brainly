@@ -1,29 +1,41 @@
 import mongoose, { Schema } from "mongoose";
 
+const userSchema = new Schema(
+    {
+        username: { type: String, unique: true, required: true, trim: true },
+        password: { type: String, required: true },
+    },
+    { timestamps: true }
+);
 
-const userSchema = new Schema({
-    username: { type: String, unique: true, require: true },
-    password: { type: String, require: true }
-})
+const tagSchema = new Schema(
+    {
+        title: { type: String, unique: true, required: true, trim: true },
+    },
+    { timestamps: true }
+);
 
-const tagSchema = new Schema({
-    title: { type: String, unique: true, require: true }
-})
+export const CONTENT_TYPES = ["image", "video", "article", "link", "youtube", "twitter"] as const;
+export type ContentType = (typeof CONTENT_TYPES)[number];
 
-const contents = ['image', 'video', 'article', 'link', 'youtube', 'twitter'];
+const contentSchema = new Schema(
+    {
+        link: { type: String, required: true },
+        title: { type: String, required: true, trim: true },
+        type: { type: String, enum: CONTENT_TYPES, required: true },
+        tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
+        userId: { type: mongoose.Types.ObjectId, ref: "User", required: true, index: true },
+    },
+    { timestamps: true }
+);
 
-const contentSchema = new Schema({
-    link: { type: String, require: true },
-    title: { type: String, require: true },
-    type: { type: String, enum: contents, require: true },
-    tags: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
-    userId: { type: mongoose.Types.ObjectId, ref: 'User', require: true }
-})
-
-const linkSchema = new Schema({
-    hash: { type: String, require: true },
-    userId: { type: mongoose.Types.ObjectId, ref: 'User', require: true, unique: true }
-})
+const linkSchema = new Schema(
+    {
+        hash: { type: String, required: true, unique: true },
+        userId: { type: mongoose.Types.ObjectId, ref: "User", required: true, unique: true },
+    },
+    { timestamps: true }
+);
 
 export const UserModel = mongoose.model("User", userSchema);
 export const TagModel = mongoose.model("Tag", tagSchema);

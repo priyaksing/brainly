@@ -1,6 +1,26 @@
-/node_modules
-/src/config.ts
-
-dist
-src/config.ts
 node_modules
+dist
+
+# Environment variables (real values; .env.example is committed)
+.env
+.env.local
+.env.*.local
+
+# Old config file (pre-env refactor)
+src/config.ts
+
+# Legacy reference files (not used at runtime; kept locally for diffing)
+src/index_old.ts
+src/middleware_old.ts
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.tsbuildinfo
+tsconfig.tsbuildinfo
