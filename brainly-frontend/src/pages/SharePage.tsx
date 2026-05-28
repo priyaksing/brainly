@@ -18,10 +18,8 @@ export default function SharePage() {
     }
 
     useEffect(() => {
-
         getBrain();
-
-    }, [shareUrl]);
+    }, []);
 
     return (
         <div className="bg-blue-200 min-h-screen">
