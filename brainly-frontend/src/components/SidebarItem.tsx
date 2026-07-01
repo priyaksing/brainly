@@ -1,37 +1,25 @@
-import { ReactElement } from "react"
-import DisplayContent from "./DisplayContent";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+import { ReactElement } from "react";
 
 interface ItemProps {
-    icon: ReactElement,
-    title: string
+  icon: ReactElement;
+  title: string;
+  active?: boolean;
+  onClick?: () => void;
 }
 
-export default function SidebarItem({ icon, title }: ItemProps) {
-
-    async function filterContent() {
-        const response = await axios.post(`${BACKEND_URL}/api/v1/contentByType`, {
-            type: title.toLowerCase()
-        }, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        });
-
-        const contents = response.data.contents;
-        console.log(contents);
-
-        <DisplayContent contents={contents} />
-    }
-
-
-    return (
-        <div className="flex items-center gap-4 py-2 px-5 text-gray-400 font-medium cursor-pointer hover:bg-blue-200 hover:text-blue-100">
-            {icon}
-            <div className="tracking-wider" onClick={filterContent}>
-                {title}
-            </div>
-        </div>
-    )
+export default function SidebarItem({ icon, title, active, onClick }: ItemProps) {
+  return (
+    <div
+      onClick={onClick}
+      className={
+        "flex items-center gap-4 py-2 px-5 font-medium cursor-pointer rounded-md " +
+        (active
+          ? "bg-blue-500 text-blue-100"
+          : "text-gray-400 hover:bg-blue-200 hover:text-blue-100")
+      }
+    >
+      {icon}
+      <div className="tracking-wider">{title}</div>
+    </div>
+  );
 }

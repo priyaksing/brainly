@@ -1,33 +1,35 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config";
+import { useCallback, useEffect, useState } from "react";
+import { api, getErrorMessage } from "../lib/api";
+import type { Content } from "../types";
 
+interface UseContentResult {
+  contents: Content[];
+  loading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+}
 
-export default function useContent() {
+export default function useContent(): UseContentResult {
+  const [contents, setContents] = useState<Content[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const [content, setContent] = useState([]);
-
-    async function getContent() {
-        const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        })
-        setContent(response.data.contents);
+  const fetchContents = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.get<{ contents: Content[] }>("/api/v1/content");
+      setContents(response.data.contents ?? []);
+    } catch (err) {
+      setError(getErrorMessage(err, "Failed to load contents"));
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
-    useEffect(() => {
+  useEffect(() => {
+    fetchContents();
+  }, [fetchContents]);
 
-        getContent();
-        let interval = setInterval(() => {
-            getContent();
-        }, 1 * 1000)
-
-        return () => {
-            clearInterval(interval);
-        }
-
-    }, [content.length]);
-
-    return content
+  return { contents, loading, error, refetch: fetchContents };
 }
