@@ -1,0 +1,8 @@
+# Versions are pinned so this runs the same way months from now.
+# Install with:  .venv/Scripts/python -m pip install -r requirements.txt
+
+openai==3.20.0            # OpenAI API client
+pymongo==4.18.2           # MongoDB driver (talks to the same Atlas cluster as the backend)
+requests==2.34.2          # HTTP client, used to download bookmarked pages
+beautifulsoup4==4.15.0    # HTML parser, used to pull readable text out of a page
+pydantic-settings==2.15.0 # Validated config loaded from .env
